@@ -1,0 +1,235 @@
+/* =========================================================
+   1. BIẾN MÀU & KÍCH THƯỚC (dễ đổi theo thương hiệu)
+   ========================================================= */
+:root {
+  --color-primary: #1a56db;     /* màu chính: nút, logo */
+  --color-primary-dark: #1e40af;
+  --color-sale: #d70018;        /* đỏ: giá khuyến mãi, nhãn giảm giá */
+  --color-save-bg: #fff1f2;     /* nền nhạt cho dòng "Tiết kiệm" */
+  --color-text: #1f2937;
+  --color-muted: #6b7280;       /* xám: giá gốc, lượt bán */
+  --color-border: #e5e7eb;
+  --color-bg: #f3f4f6;
+  --color-card: #ffffff;
+  --radius: 10px;
+  --gap: 12px;
+}
+
+/* =========================================================
+   2. RESET CƠ BẢN
+   ========================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+
+/* Ẩn chữ trên màn hình nhưng trình đọc màn hình vẫn đọc được */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+/* =========================================================
+   3. HEADER & Ô TÌM KIẾM
+   ========================================================= */
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;            /* điện thoại: ô tìm kiếm xuống dòng */
+  align-items: center;
+  gap: 8px 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo { font-size: 22px; font-weight: 800; color: var(--color-primary); }
+.logo span { color: var(--color-sale); }
+
+.search { display: flex; flex: 1 1 100%; }
+.search input {
+  flex: 1; min-width: 0;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid var(--color-border);
+  border-right: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.search input:focus { outline: 2px solid var(--color-primary); outline-offset: -2px; }
+.search button {
+  padding: 0 16px;
+  font-size: 15px;
+  color: #fff;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  cursor: pointer;
+}
+
+/* =========================================================
+   4. TIÊU ĐỀ KHU VỰC
+   ========================================================= */
+.product-section { padding: 16px 0 32px; }
+.section-head h1 { margin: 0 0 4px; font-size: 20px; }
+.section-note { margin: 0 0 12px; font-size: 13px; color: var(--color-muted); }
+
+/* =========================================================
+   5. LƯỚI SẢN PHẨM (mobile-first: 2 cột trên điện thoại)
+   ========================================================= */
+.product-grid {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+/* =========================================================
+   6. THẺ SẢN PHẨM
+   ========================================================= */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;               /* các thẻ trong cùng hàng cao bằng nhau */
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow .2s, transform .2s;
+}
+.product-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  transform: translateY(-2px);
+}
+
+/* Ảnh vuông + nhãn % giảm ở góc */
+.product-media { position: relative; aspect-ratio: 1 / 1; }
+.product-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.badge-discount {
+  position: absolute; top: 8px; left: 8px;
+  padding: 2px 8px;
+  font-size: 13px; font-weight: 700;
+  color: #fff;
+  background: var(--color-sale);
+  border-radius: 999px;
+}
+
+.product-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 10px;
+}
+
+/* Tên tối đa 2 dòng để các thẻ thẳng hàng */
+.product-name {
+  margin: 0 0 6px;
+  font-size: 14px; font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(1.45em * 2);
+}
+.product-name a:hover { color: var(--color-primary); }
+
+.product-rating { margin: 0 0 6px; font-size: 12px; color: var(--color-muted); }
+.stars { color: #f59e0b; font-weight: 600; }
+
+/* ----- KHỐI GIÁ: trọng tâm cải tiến ----- */
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  margin-top: auto;           /* đẩy khối giá + nút xuống đáy thẻ */
+}
+.price-sale {
+  font-size: 18px; font-weight: 700;
+  color: var(--color-sale);
+}
+.price-regular { color: var(--color-text); } /* sản phẩm không giảm giá */
+.price-original { font-size: 13px; color: var(--color-muted); }
+
+.price-save {
+  align-self: flex-start;
+  margin: 4px 0 10px;
+  padding: 1px 6px;
+  font-size: 12px; font-weight: 600;
+  color: var(--color-sale);
+  background: var(--color-save-bg);
+  border-radius: 4px;
+}
+.price-save--empty { background: transparent; }
+
+/* Nút thao tác: đủ lớn để bấm trên điện thoại (>= 44px) */
+.btn-buy {
+  width: 100%;
+  min-height: 44px;
+  font-size: 14px; font-weight: 600;
+  color: #fff;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-buy:hover { background: var(--color-primary-dark); }
+.btn-buy:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+
+/* =========================================================
+   7. FOOTER
+   ========================================================= */
+.site-footer {
+  padding: 16px 0;
+  font-size: 13px;
+  color: var(--color-muted);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+
+/* =========================================================
+   8. RESPONSIVE
+   ========================================================= */
+/* Máy tính bảng: 3 cột, ô tìm kiếm nằm cùng hàng logo */
+@media (min-width: 640px) {
+  .search { flex: 1 1 auto; }
+  .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+
+/* Máy tính: 4 cột */
+@media (min-width: 1024px) {
+  .product-grid { grid-template-columns: repeat(4, 1fr); }
+  .section-head h1 { font-size: 24px; }
+  .product-body { padding: 12px 14px 14px; }
+  .price-sale { font-size: 20px; }
+}
+
+/* Điện thoại rất nhỏ (< 360px): thu nhỏ chữ giá để không tràn */
+@media (max-width: 359px) {
+  .price-sale { font-size: 16px; }
+  .product-body { padding: 8px; }
+}
